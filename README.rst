@@ -13,10 +13,10 @@ SocketHandler client.
 Purpose
 -------
 
-My (Doug Farrell) reason for creating this is I like the Python logging system, but wasn't
-crazy about every Python process on every separate server having it's own log
-file. Plus, I had to know which log file to look in to find a problem that
-might be occurring.
+My (Doug Farrell) reason for creating this is I like the Python logging
+system, but wasn't crazy about every Python process on every separate server
+having it's own log file. Plus, I had to know which log file to look in to
+find a problem that might be occurring.
 
 I could have all Python processes point to one log file,
 but there was nothing to prevent them from trashing the log file by trying to
@@ -28,13 +28,18 @@ have the immediacy I was looking for.
 
 The logging server resolves these issues by providing the following:
 
-* It synchronizes access to the one central log file through the network interface
-* Because it is network based, multiple Python processes can send log messages to it
-* Again, because it is network based, multiple Python processes on multiple servers can send log messages to it
+* It synchronizes access to the one central log file through the network
+  interface
+* Because it is network based, multiple Python processes can send log messages
+  to it
+* Again, because it is network based, multiple Python processes on multiple
+  servers can send log messages to it
 * It provides a centralized status page that provides:
     1. Some statistics on the logging server itself
-    2. A color coded, chronological listing of the most recent 300 log messages that is updated every 5 seconds.
-    3. A separate user configurable CSS file to control the presentation of the status page
+    2. A color coded, chronological listing of the most recent 300 log
+       messages that is updated every 5 seconds.
+    3. A separate user configurable CSS file to control the presentation of
+       the status page
 
 Requirements
 ------------
@@ -76,10 +81,10 @@ Running
 The logging server is run as a daemon process by Twisted, and is invoked as
 follows:
 
-    twistd --pidfile=loggingserver.pid --logfile=logginserver.log --python=loggingserver.py
+    twistd --pidfile=loggingserver.pid --logfile=loggingserver.log --python=loggingserver.py
 
 This will tell Twisted to start the logging server by running the
-loggingserver.py main file. It will save the PID of the process in teh
+loggingserver.py main file. It will save the PID of the process in the
 loggingserver.pid file and it will log its own messages to the
 loggingserver.log file. These are just an example of how to run the logging
 server, modify as need be for your purposes.
@@ -129,7 +134,9 @@ Comment by hugotruffegm, Feb 01, 2010
 Hello, you could put the note here to read Python Magazine?. Or take an
 example because of complications with running the application.
 
-Tutbogears configure an application, which sends a message to the server (critical level). this message reaches the server log, but the webpage did not add the server log and did not show anything.
+Tutbogears configure an application, which sends a message to the server
+(critical level). this message reaches the server log, but the webpage did not
+add the server log and did not show anything.
 
 Log Records Total 0
 
@@ -161,8 +168,10 @@ I'm thinking about making changes to the logging_server, here is what I'm
 considering:
 
 * Bring the logging server up to the Twisted 10.0 release.
-* Make use of the Twisted plug-in facility to add handlers to the system so users could add customer handling, ie: Instant Messaging for instance.
-* Add handlers for XMLRPC, JSON and HTTP Form Encode log messages so other languages besides Python could talk to the logging_server and make use of it.
+* Make use of the Twisted plug-in facility to add handlers to the system so
+  users could add customer handling, ie: Instant Messaging for instance.
+* Add handlers for XMLRPC, JSON and HTTP Form Encode log messages so other
+  languages besides Python could talk to the logging_server and make use of it.
 
 I'd like to know what you think, thanks! Doug
 
