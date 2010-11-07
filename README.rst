@@ -1,7 +1,7 @@
 PythonLoggingServer
 ===================
 
-A Python Logging Server
+A Python Logging Server by Doug Farrell
 
 Introduction
 ------------
@@ -13,7 +13,7 @@ SocketHandler client.
 Purpose
 -------
 
-My reason for creating this is I like the Python logging system, but wasn't
+My (Doug Farrell) reason for creating this is I like the Python logging system, but wasn't
 crazy about every Python process on every separate server having it's own log
 file. Plus, I had to know which log file to look in to find a problem that
 might be occurring.
