@@ -2,6 +2,10 @@ PythonLoggingServer
 ===================
 
 A Python Logging Server by Doug Farrell
+Original at: http://code.google.com/p/python-loggingserver/
+
+Modified by Steve Steiner (ssteinerX@gmail.com)
+ssteinerX github: https://github.com/ssteinerx/python-loggingserver
 
 Introduction
 ------------
@@ -18,9 +22,9 @@ system, but wasn't crazy about every Python process on every separate server
 having it's own log file. Plus, I had to know which log file to look in to
 find a problem that might be occurring.
 
-I could have all Python processes point to one log file,
-but there was nothing to prevent them from trashing the log file by trying to
-write at the same time.
+I could have all Python processes point to one log file, but there was nothing
+to prevent them from trashing the log file by trying to write at the same
+time.
 
 In addition, processes on other servers couldn't do this unless they used some
 mounted/shared file system. Plus, tailing a log file, while useful, didn't
@@ -34,7 +38,7 @@ The logging server resolves these issues by providing the following:
   to it
 * Again, because it is network based, multiple Python processes on multiple
   servers can send log messages to it
-* It provides a centralized status page that provides:
+* It provides a centralized status page that shows
     1. Some statistics on the logging server itself
     2. A color coded, chronological listing of the most recent 300 log
        messages that is updated every 5 seconds.
@@ -57,11 +61,11 @@ file and begins to listen on two network socket ports for messages. On one
 port it is listening for log messages that were transmitted by client
 programs.
 
-On the other port it is listening for HTTP requests for the status
-page. For this reason the project code can be anywhere on the system so long
-as it can be run by Twisted. The program will need access to it's
-configuration file. For a production installation the code should be located
-in some central script location.
+On the other port it is listening for HTTP requests for the status page. For
+this reason the project code can be anywhere on the system so long as it can
+be run by Twisted. The program will need access to it's configuration file.
+For a production installation the code should be located in some central
+script location.
 
 Status Page
 -----------
@@ -120,16 +124,15 @@ I wrote a more complete article about the logging server that appeared in the
 October issue of Python Magazine.
 
 
-Comment by e...@sxnet.com.ar, Aug 06, 2009
+**Comment by e...@sxnet.com.ar, Aug 06, 2009**
 
 Excellent app ... i'm writing a python system monitor using most from psi and
 enumprocess, so your app is very usefull for me! Trying it right now :)
 
-Comment by andresgattinoni, Jan 28, 2010
-
+**Comment by andresgattinoni, Jan 28, 2010**
 Sounds great. Is it possible to integrate the logging server with syslog?
 
-Comment by hugotruffegm, Feb 01, 2010
+**Comment by hugotruffegm, Feb 01, 2010**
 
 Hello, you could put the note here to read Python Magazine?. Or take an
 example because of complications with running the application.
@@ -190,3 +193,24 @@ I'm going to fork this at github so I can work on it, my github ID is
 ssteinerx as well if anyone wants to follow along there.
 
 S aka/ssteinerX aka/Steve Steiner
+
+**Comment by sstein...@gmail.com, Today (moments ago)**
+
+I have posted fixes for two of the issues in the issue tracker, created a
+README.txt from the wiki contents, and am now adding a setup.py.
+
+For my own use, I'm going to have to document how to pull this into a Twisted
+app from the installed version, so I'll post that to the wiki on github (i
+don't seem to be able to do anything but comment here on google).
+
+I need a WebSocket? based implementation for my monitor, and have that
+(WebSocket?, that is)working well in Twisted, so I'll probably throw that in
+for fun later.
+
+Anyone who wants to follow or help, or if you'd like to pull my fixes in:
+
+    https://github.com/ssteinerx/python-loggingserver
+
+Thanks,
+
+S

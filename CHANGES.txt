@@ -1,0 +1,42 @@
+November 7, 2010 -- ssteinerX
+------------------------------
+
+Issue 1 at the google tracker requests to have the server available on a
+different interface. I added a parameter to the LoggingServerWebService to
+allow specification of a different interface though I haven't figured out how
+to get twistd to pass a command line parameter in yet...
+
+November 7, 2010 -- ssteinerX
+------------------------------
+
+Removed hard-coded limit on number of records kept by LoggingServerModel to be
+configurable on instantiation rather than fixed at 200. Changed default to 30
+to accommodate my needs; 200 just took too long to refresh in the browser.
+Since it's configurable now, the default could be put back to 200 if it
+bothers anyone.
+
+I changed this since I have different destinations for these queues that
+require different amounts of back-storage.
+
+I'll probably make a couple of variants on this since one of my use-cases is
+to whizz the logging info out a WebSocket where I want the queue to empty as
+quickly as the data is able to be sent out so I don't have to keep a bucket of
+them around.
+
+November 7, 2010 -- ssteinerX
+------------------------------
+
+I'm keeping a verbose changelog in each file in case Doug wants to pull my
+stuff over without having to go nuts trying to figure out what exactly I
+changed.
+
+
+November 6, 2010 -- ssteinerX
+------------------------------
+
+Created new repository at https://github.com/ssteinerx/python-loggingserver
+
+Fixed loggingprotocol.py's initialization of the logging system. It had been
+done in the __init__ of the LoggingProtocol which caused logging to stop as
+soon as a second incoming logger started. This fixed 2 bugs as noted in the
+tracker (2 & 3).

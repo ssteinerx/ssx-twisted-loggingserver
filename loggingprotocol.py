@@ -8,6 +8,14 @@ provides the server side interface for what the SocketHandler module
 produces.
 '''
 
+##
+# November 7, 2010 -- ssteinerX
+#
+# Issue 1 at the google tracker requests to have the server available on a
+# different port.  I added a parameter to the LoggingServerWebService to
+# allow specification of a different interface
+##
+
 AUTHOR = "Doug Farrell"
 REVISION = "$Rev$"
 
@@ -33,7 +41,7 @@ observer.start()
 from loggingwebpage import htmlpage
 from loggingmodel import model
 
-# configure the logging system
+# configure the logging system *once*
 logging.config.fileConfig('loggingserver.conf',
                           {"processlog" : "process.log"})
 
@@ -179,11 +187,12 @@ class LoggingServerWebService(twisted.application.internet.TCPServer):
     '''This class encapsulates the createion of the TCP service that
     provides the HTTP webserver for the logging servers status page.
     '''
-    def __init__(self):
+    def __init__(self, interface='127.0.0.1'):
         webRoot = twisted.web.resource.Resource()
         webRoot.putChild('', LoggingServerWebResource())
         site = twisted.web.server.Site(webRoot)
+        
         internet.TCPServer.__init__(self,
-                logging.handlers.DEFAULT_TCP_LOGGING_PORT + 1, site)
+                logging.handlers.DEFAULT_TCP_LOGGING_PORT + 1, site, interface=interface)
         self.setName("Logging Server Web Server")
 
