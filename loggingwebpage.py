@@ -1,6 +1,6 @@
 '''
  $Id$
- 
+
 This module contains the html the logging server uses to display it's
 status.
 '''
@@ -15,7 +15,7 @@ htmlpage = '''
     <meta http-equiv="refresh" content="5" />
     <title>Logging Server Status Page</title>
     <link rel="stylesheet" type="text/css"
-          href="http://localhost/loggingserver.css" />
+          href="/loggingserver.css" />
   </head>
   <body>
     <h4>Logging Server Status Page</h4>

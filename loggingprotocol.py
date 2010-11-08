@@ -16,6 +16,14 @@ produces.
 # allow specification of a different interface
 ##
 
+##
+# November 7, 2010 -- ssteinerx
+#
+# Removed a whole ton of code from the LoggingServerWebResource.render_GET
+# HTML generator by using logging's getLevelName() function instead of
+# switching out on the error level
+##
+
 AUTHOR = "Doug Farrell"
 REVISION = "$Rev$"
 
@@ -31,6 +39,7 @@ import twisted
 from twisted.application import service, internet
 from twisted.internet import protocol
 from twisted.web import resource, server as webserver
+from twisted.web.static import File
 
 from twisted.python import log  # so we can log to Twisted's separate log
 
@@ -64,16 +73,14 @@ class LoggingProtocol(twisted.internet.protocol.Protocol):
         self._buffer = ""
 
     def dataReceived(self, data):
-        '''This method accumulates the data received till
-        we have a complete log message. Then it pulls the log message
-        out and to logger.handle as a logrecord. This
-        method is called by the Protocol parent class when data is
-        received from the socket attached to this protocol. This
-        method has to handle possible multiple messages per buffer
-        and partial messages per buffer.
+        '''This method accumulates the data received till we have a complete
+        log message. Then it pulls the log message out and to logger.handle as
+        a logrecord. This method is called by the Protocol parent class when
+        data is received from the socket attached to this protocol. This
+        method has to handle possible multiple messages per buffer and partial
+        messages per buffer.
 
-        Parameters:
-        data           string of data received by the socket this
+        Parameters:    data string of data received by the socket this
                        server is attached to contains the data sent
                        by logging.handlers.SocketHandler
         '''
@@ -148,39 +155,27 @@ class LoggingServerWebResource(twisted.web.resource.Resource):
     status home page. This page provides a view of what's going
     on inside the logging server.
     '''
+    # November 7, 2010 -- ss -- only initialize once for the class
+    formatter = logging.Formatter(
+        fmt="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S")
+    html = '''<tr class="%s"><td>%s</td></tr>'''
+
     def render_GET(self, request):
-        formatter = logging.Formatter(
-            fmt="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S")
-        data = {}
-        data["starttime"] = model.starttime
-        data["uptime"] = model.uptime
-        data["logrecordstotal"] = model.logRecordsTotal
+        data = {
+            "starttime"         : model.starttime,
+            "uptime"            : model.uptime,
+            "logrecordstotal"   : model.logRecordsTotal,
+            "all"               : []
+        }
+
         # create list of all log records
-        html = '''<tr class="%s"><td>%s</td></tr>'''
-        rows = []
         for logrecord in model:
-            if logrecord.levelno == logging.CRITICAL:
-                rows.append(html % ("critical",
-                    formatter.format(
-                        logrecord).replace(' ', '&nbsp;')))
-            if logrecord.levelno == logging.ERROR:
-                rows.append(html % ("error",
-                    formatter.format(
-                        logrecord).replace(' ', '&nbsp;')))
-            if logrecord.levelno == logging.WARN:
-                rows.append(html % ("warn",
-                    formatter.format(
-                        logrecord).replace(' ', '&nbsp;')))
-            if logrecord.levelno == logging.INFO:
-                rows.append(html % ("info",
-                    formatter.format(
-                        logrecord).replace(' ', '&nbsp;')))
-            if logrecord.levelno == logging.DEBUG:
-                rows.append(html % ("debug",
-                    formatter.format(
-                        logrecord).replace(' ', '&nbsp;')))
-        data["all"] = ''.join(rows)
+            # November 7, 2010 -- ssteinerX, removed a bunch of silly code
+            levelName = logging.getLevelName(logrecord.levelno).lower()
+            text = LoggingServerWebResource.formatter.format(logrecord).replace(' ', '&nbsp;')
+            data["all"].append(LoggingServerWebResource.html % (levelName, text))
+
         return htmlpage % data
 
 class LoggingServerWebService(twisted.application.internet.TCPServer):
@@ -191,7 +186,7 @@ class LoggingServerWebService(twisted.application.internet.TCPServer):
         webRoot = twisted.web.resource.Resource()
         webRoot.putChild('', LoggingServerWebResource())
         site = twisted.web.server.Site(webRoot)
-        
+        webRoot.putChild('loggingserver.css', File('loggingserver.css'))
         internet.TCPServer.__init__(self,
                 logging.handlers.DEFAULT_TCP_LOGGING_PORT + 1, site, interface=interface)
         self.setName("Logging Server Web Server")
