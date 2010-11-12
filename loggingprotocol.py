@@ -27,6 +27,8 @@ import cPickle                 # use cPickle for speed
 import struct
 
 import twisted
+from twisted.internet.protocol import Protocol
+from twisted.application.internet import TCPServer
 from twisted.python import log  # so we can log to Twisted's separate log
 
 observer = log.PythonLoggingObserver()
@@ -40,7 +42,7 @@ logging.config.fileConfig('loggingserver.conf',
                           {"processlog" : "process.log"})
 
 
-class LoggingProtocol(twisted.internet.protocol.Protocol):
+class LoggingProtocol(Protocol):
     '''Encapsulates the actual handling of the data received by the
     protocol. It builds up the message till it can peel off a log message, and
     then calls the defined logger.handle() so the Python logging system can
@@ -121,7 +123,7 @@ class LoggingFactory(twisted.internet.protocol.Factory):
     protocol = LoggingProtocol
 
 
-class LoggingService(twisted.application.internet.TCPServer):
+class LoggingService(TCPServer):
 
     '''Encapsulates our TCP service, tying it to a port number and to the
     protocol that will handle the received messages, in this case an instance
