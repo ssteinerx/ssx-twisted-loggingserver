@@ -24,16 +24,17 @@ class LoggingServerWebResource(twisted.web.resource.Resource):
             "starttime"         : model.starttime,
             "uptime"            : model.uptime,
             "logrecordstotal"   : model.logRecordsTotal,
-            "all"               : []
         }
 
         # create list of all log records
+        rows = []
         for logrecord in model:
             # November 7, 2010 -- ssteinerX, removed a bunch of silly code
             levelName = logging.getLevelName(logrecord.levelno).lower()
             text = LoggingServerWebResource.formatter.format(logrecord).replace(' ', '&nbsp;')
-            data["all"].append(LoggingServerWebResource.html % (levelName, text))
+            rows.append(LoggingServerWebResource.html % (levelName, text))
 
+        data["all"] = ''.join(rows)
         return htmlpage % data
 
 class LoggingServerWebService(twisted.application.internet.TCPServer):
