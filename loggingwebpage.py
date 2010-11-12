@@ -1,14 +1,8 @@
 '''
- $Id$
-
-This module contains the html the logging server uses to display it's
+This module contains the html the logging server uses to display its
 status.
 '''
 
-AUTHOR = "Doug Farrell"
-REVISION = "$Rev$"
-
-# the html code that makes up the logging servers status page
 htmlpage = '''
 <html>
   <head>

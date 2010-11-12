@@ -1,9 +1,6 @@
 '''
- $Id$
-
-This module defines the logging server system 'model'
-code, sort of like the model of an MVC pattern of thinking
-about the logging server system.
+Defines the logging server system 'model' code, sort of like the model of an
+MVC pattern of thinking about the logging server system.
 '''
 
 ##
@@ -12,32 +9,29 @@ about the logging server system.
 # Made queueSize configurable instead of a constant so different servers
 # could have different sized windows.
 #
-# Changed default size to 30 since refreshing 200 in the demo was just annoying.
+# Changed default size to 30 since refreshing 200 in the web page for the demo
+# was just annoying.
 ##
 
-AUTHOR = "Doug Farrell"
-REVISION = "$Rev$"
 
 import datetime
 
 class LoggingServerModel(object):
-    '''This class defines what data will be saved and available to
-    the logging system viewers and controllers.
+    '''Defines what data will be saved and available to the logging system
+    viewers and controllers.
     '''
 
     def __init__(self, queueSize=30):
-        '''Constructor for the class, initializes the class level
-        variables.
-        '''
         self._startTime = datetime.datetime.now()
         self._logRecordsTotal = 0L
         self._logrecords = []
         self._queueSize = queueSize
 
     def __iter__(self):
-        '''Provide a reverse iterator so logrecords are provided
-        in newest to oldest order.
+        '''Provide a reverse iterator so logrecords are provided in newest to
+        oldest order.
         '''
+
         index = len(self._logrecords)
         while index > 0:
             index -= 1
@@ -59,6 +53,7 @@ class LoggingServerModel(object):
     logRecordsTotal = property(_getLogRecordsTotal)
 
     def _getQueueSize(self):
+        '''Get the current size of the logging record queue'''
         return self._queueSize
     queueSize = property(_getQueueSize)
 

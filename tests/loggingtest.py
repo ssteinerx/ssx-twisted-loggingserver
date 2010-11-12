@@ -1,14 +1,9 @@
 '''
- $Id$
-
 This is just a simple test harness for the logging server.
 It randomly generates log messages to send to the server till
 the user hits CTRL-C. It also expects a command line parameter of
 some string, which is the "module" reporting the log message.
 '''
-
-AUTHOR = "Doug Farrell"
-REVISION = "$Rev$"
 
 import logging
 import logging.config
