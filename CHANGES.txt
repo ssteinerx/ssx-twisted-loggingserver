@@ -1,10 +1,15 @@
+November 10, 2010
+------------------------------
+
 November 7, 2010 -- ssteinerX
 ------------------------------
 
 Issue 1 at the google tracker requests to have the server available on a
 different interface. I added a parameter to the LoggingServerWebService to
 allow specification of a different interface though I haven't figured out how
-to get twistd to pass a command line parameter in yet...
+to get twistd to pass a command line parameter in yet...that's funny, seems
+like I was involved in a discussion on the twisted mailing list about this a
+while ago; you can't.  The suggestion was to "write a plug-in."  Wonderful.
 
 November 7, 2010 -- ssteinerX
 ------------------------------
@@ -18,10 +23,10 @@ bothers anyone.
 I changed this since I have different destinations for these queues that
 require different amounts of back-storage.
 
-I'll probably make a couple of variants on this since one of my use-cases is
-to whizz the logging info out a WebSocket where I want the queue to empty as
-quickly as the data is able to be sent out so I don't have to keep a bucket of
-them around.
+I'll probably make a couple of variants since one of my use-cases is to whizz
+the logging info out a WebSocket where I want the queue to empty as quickly as
+the data is able to be sent out so I don't have to keep a bucket of them
+around.
 
 November 7, 2010 -- ssteinerX
 ------------------------------

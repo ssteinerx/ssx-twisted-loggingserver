@@ -56,21 +56,19 @@ logging.config.fileConfig('loggingserver.conf',
 
 
 class LoggingProtocol(twisted.internet.protocol.Protocol):
-    '''This class encapsulates the actual handling of the data
-    received by the protocol. It builds up the message till it can
-    peel off a log message, and then calls the defined
-    logger.handle() so the Python logging system can then handle
-    the message.
+    '''This class encapsulates the actual handling of the data received by the
+    protocol. It builds up the message till it can peel off a log message, and
+    then calls the defined logger.handle() so the Python logging system can
+    then handle the message.
     '''
     LONG_INT_LENGTH = 4
 
     def __init__(self):
-        '''Constructor for our derived Protocol class. This configures
-        the logging system for the server and sets up some instance
-        variables.
+        '''Constructor for our derived Protocol class. This configures the
+        logging system for the server and sets up some instance variables.
         '''
-        self._logger = logging.getLogger("loggingserver")
-        self._buffer = ""
+
+     self._logger = logging.getLogger("loggingserver") self._buffer = ""
 
     def dataReceived(self, data):
         '''This method accumulates the data received till we have a complete

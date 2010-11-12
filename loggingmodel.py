@@ -18,7 +18,6 @@ about the logging server system.
 AUTHOR = "Doug Farrell"
 REVISION = "$Rev$"
 
-# system modules
 import datetime
 
 class LoggingServerModel(object):
@@ -50,8 +49,7 @@ class LoggingServerModel(object):
     starttime = property(_getStartTime)
 
     def _getUpTime(self):
-        '''Get the current uptime of the logging server minus the
-        microseconds'''
+        '''Get the current uptime of the logging server sans microseconds'''
         diff = (datetime.datetime.now() - self._startTime).__str__()
         return diff[:diff.find('.')]
     uptime = property(_getUpTime)
@@ -65,8 +63,8 @@ class LoggingServerModel(object):
     queueSize = property(_getQueueSize)
 
     def logRecordHandler(self, logrecord):
-        '''This method adds the logrecord to the sliding
-        window of logrecords coming into the logging server.
+        '''Add the logrecord to the sliding window of logrecords coming into
+        the logging server.
         '''
         logrecords = self._logrecords
         logrecords.append(logrecord)
