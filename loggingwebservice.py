@@ -37,6 +37,8 @@ class LoggingServerWebResource(twisted.web.resource.Resource):
         data["all"] = ''.join(rows)
         return htmlpage % data
 
+
+
 class LoggingServerWebService(twisted.application.internet.TCPServer):
     '''This class encapsulates the createion of the TCP service that
     provides the HTTP webserver for the logging servers status page.
