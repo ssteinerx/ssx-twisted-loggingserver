@@ -8,6 +8,7 @@ import twisted.internet
 from loggingmodel import model
 from loggingwebpage import htmlpage
 
+
 class LoggingServerWebResource(twisted.web.resource.Resource):
     '''This class defines the entry point for the logging server
     status home page. This page provides a view of what's going
