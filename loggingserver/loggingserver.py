@@ -1,6 +1,19 @@
 '''
 Main logging program that implements the socket based logging server.
+
+Can be invoked with:
+    twistd  --pidfile=loggingserver.pid \
+            --logfile=loggingserver.log \
+            --python=loggingserver.py
+
+Also see loggingservicerunner.py which contains
+
 '''
+
+##
+# Removed "Wing IDE" __main__ function, didn't work for me anyway.  Making
+# a twistd plugin instead.
+##
 
 import os
 from twisted.application import service
@@ -8,22 +21,6 @@ from twisted.application import service
 import loggingprotocol
 import loggingwebservice
 
-# create an application instance
-application = service.Application("LoggingServer")
+from loggingservicerunner import makeService
 
-# create the logging service
-loggingService = loggingprotocol.LoggingService()
-loggingService.setServiceParent(application)
-
-# create the logging server web status page server
-loggingServiceWebServer = loggingwebservice.LoggingServerWebService()
-loggingServiceWebServer.setServiceParent(application)
-
-# this section allows the server to run within the wingide debugger
-if __name__ == "__main__":
-    from twisted.scripts.twistd import run
-    try:
-        os.unlink('twistd.pid')
-    except OSError:
-        pass
-    run()
+makeService()

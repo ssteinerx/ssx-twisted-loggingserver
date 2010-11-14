@@ -70,14 +70,15 @@ script location.
 Status Page
 -----------
 
-The loggingserver.css file will need to be accessible to the web based status
-page, you'll see in the default code it's referenced as
-http://lcoalhost/loggingserver.css.
+FIXED: ssteinerX -- file is now just served by Twisted
+>The loggingserver.css file will need to be accessible to the web based status
+>page, you'll see in the default code it's referenced as
+>http://lcoalhost/loggingserver.css.
 
-This means that a web server answering to port 80 will need to have access to
-the file in order to serve it up. For a production system you'll want to put
-this on a web server at a URL you can rely on and change the
-loggingserverwebpage.py file to reflect this.
+>This means that a web server answering to port 80 will need to have access to
+>the file in order to serve it up. For a production system you'll want to put
+>this on a web server at a URL you can rely on and change the
+>loggingserverwebpage.py file to reflect this.
 
 Running
 -------

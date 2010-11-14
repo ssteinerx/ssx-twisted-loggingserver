@@ -1,12 +1,36 @@
+November 13, 2010
+--------------------
+Removed "Wing IDE" __main__ function, from loggingserver.py.
+
+I never saw it actually work, didn't work from command line, don't use Wing,
+removed.
+
+November 13, 2010
+--------------------
+Moved things down into a separate directory, about to create a twisted plugin
+out of this so that it can just be invoked without falderal directly from
+`twistd`.  This will allow me to use it the way I want, under supervisord and
+will allow me to pass in command line parameters as well.
+
+
+November 13, 2010
+--------------------
+
+Rewrote LoggingProtocol class to simplify dataReceived significantly and
+remove some repeated len() calls and other redundant calculations.
+
+Generally simplified and, I'm sure, sped up the data handling.
+
+
 November 11, 2010
-------------------------------
+--------------------
 
 Tweaked up the comments, removed AUTHOR and vcs $blah cruft from all code.
 Fixed dumb output error in "data" used for interpolation into HTML output.
 Separated web server into separate module, moved tester into separate dir.
 
-November 7, 2010 -- ssteinerX
-------------------------------
+November 7, 2010
+--------------------
 
 Issue 1 at the google tracker requests to have the server available on a
 different interface. I added a parameter to the LoggingServerWebService to
@@ -15,8 +39,8 @@ to get twistd to pass a command line parameter in yet...that's funny, seems
 like I was involved in a discussion on the twisted mailing list about this a
 while ago; you can't.  The suggestion was to "write a plug-in."  Wonderful.
 
-November 7, 2010 -- ssteinerX
-------------------------------
+November 7, 2010
+--------------------
 
 Removed hard-coded limit on number of records kept by LoggingServerModel to be
 configurable on instantiation rather than fixed at 200. Changed default to 30
@@ -32,8 +56,8 @@ the logging info out a WebSocket where I want the queue to empty as quickly as
 the data is able to be sent out so I don't have to keep a bucket of them
 around.
 
-November 7, 2010 -- ssteinerX
-------------------------------
+November 7, 2010
+--------------------
 
 I'm keeping a verbose changelog in each file in case Doug wants to pull my
 stuff over without having to go nuts trying to figure out what exactly I

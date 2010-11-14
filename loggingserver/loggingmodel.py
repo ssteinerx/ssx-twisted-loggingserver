@@ -6,13 +6,12 @@ MVC pattern of thinking about the logging server system.
 ##
 # November 7, 2010 -- ssteinerX
 #
-# Made queueSize configurable instead of a constant so different servers
+# Made queuesize configurable instead of a constant so different servers
 # could have different sized windows.
 #
 # Changed default size to 30 since refreshing 200 in the web page for the demo
 # was just annoying.
 ##
-
 
 import datetime
 
@@ -21,17 +20,16 @@ class LoggingServerModel(object):
     viewers and controllers.
     '''
 
-    def __init__(self, queueSize=30):
+    def __init__(self, queuesize=30):
         self._startTime = datetime.datetime.now()
         self._logRecordsTotal = 0L
         self._logrecords = []
-        self._queueSize = queueSize
+        self._queuesize = queuesize
 
     def __iter__(self):
         '''Provide a reverse iterator so logrecords are provided in newest to
         oldest order.
         '''
-
         index = len(self._logrecords)
         while index > 0:
             index -= 1
@@ -52,10 +50,10 @@ class LoggingServerModel(object):
         return self._logRecordsTotal
     logRecordsTotal = property(_getLogRecordsTotal)
 
-    def _getQueueSize(self):
+    def _getqueuesize(self):
         '''Get the current size of the logging record queue'''
-        return self._queueSize
-    queueSize = property(_getQueueSize)
+        return self._queuesize
+    queuesize = property(_getqueuesize)
 
     def logRecordHandler(self, logrecord):
         '''Add the logrecord to the sliding window of logrecords coming into
@@ -63,7 +61,7 @@ class LoggingServerModel(object):
         '''
         logrecords = self._logrecords
         logrecords.append(logrecord)
-        if len(logrecords) > self._queueSize:
+        if len(logrecords) > self._queuesize:
             logrecords.pop(0)
         self._logRecordsTotal += 1
 
