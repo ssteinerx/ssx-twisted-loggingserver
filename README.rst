@@ -5,7 +5,7 @@ A Python Logging Server by Doug Farrell
 Original at: http://code.google.com/p/python-loggingserver/
 
 Modified by Steve Steiner (ssteinerX@gmail.com)
-ssteinerX github: https://github.com/ssteinerx/python-loggingserver
+ssteinerX github: https://ssteinerx@github.com/ssteinerx/ssx-twisted-loggingserver.git
 
 Introduction
 ------------
