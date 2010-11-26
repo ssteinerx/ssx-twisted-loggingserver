@@ -11,7 +11,7 @@ Introduction
 ------------
 
 This project provides a Python Logging Server based on the Twisted framework.
-This creates a centralized logging server to compliment the logging module's
+This creates a centralized logging server to complement the logging module's
 SocketHandler client.
 
 Purpose
@@ -19,8 +19,8 @@ Purpose
 
 My (Doug Farrell) reason for creating this is I like the Python logging
 system, but wasn't crazy about every Python process on every separate server
-having it's own log file. Plus, I had to know which log file to look in to
-find a problem that might be occurring.
+having its own log file. Plus, I had to know which log file to look in to find
+a problem that might be occurring.
 
 I could have all Python processes point to one log file, but there was nothing
 to prevent them from trashing the log file by trying to write at the same
@@ -63,14 +63,14 @@ programs.
 
 On the other port it is listening for HTTP requests for the status page. For
 this reason the project code can be anywhere on the system so long as it can
-be run by Twisted. The program will need access to it's configuration file.
+be run by Twisted. The program will need access to its configuration file.
 For a production installation the code should be located in some central
 script location.
 
 Status Page
 -----------
 
-FIXED: ssteinerX -- file is now just served by Twisted
+FIXED: ssteinerX -- the loggingserver.css file is now just served by Twisted
 >The loggingserver.css file will need to be accessible to the web based status
 >page, you'll see in the default code it's referenced as
 >http://lcoalhost/loggingserver.css.
@@ -97,6 +97,10 @@ server, modify as need be for your purposes.
 The logging server process can be stopped by this line:
 
     kill `cat loggingserver.pid`
+
+Running as Twistd Plug-in
+------------------------------
+
 
 Testing
 -------

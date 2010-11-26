@@ -1,11 +1,10 @@
 from zope.interface import implements
 
-# - Twisted modules -
 from twisted.python import usage
 from twisted.application.service import IServiceMaker
 from twisted.plugin import IPlugin
 
-from loggingservicerunner import makeService
+from loggingserver.loggingservicerunner import makeService
 import logging.config
 
 class Options(usage.Options):
@@ -26,6 +25,6 @@ class LoggingServiceMaker(object):
     options = Options
 
     def makeService(self, config):
-        return loggingservicerunner.makeService(options)
+        return makeService(config)
 
 serviceMaker = LoggingServiceMaker()

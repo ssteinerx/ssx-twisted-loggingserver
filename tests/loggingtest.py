@@ -53,3 +53,4 @@ if __name__ == "__main__":
 
     log.warn("%s loggingtest.py log message generator is leaving the party" % name)
     print "%s is done" % name
+

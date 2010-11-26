@@ -21,6 +21,6 @@ from twisted.application import service
 import loggingprotocol
 import loggingwebservice
 
-from loggingservicerunner import makeService
+from loggingserver.loggingservicerunner import makeService
 
 makeService()

@@ -1,3 +1,13 @@
+November 25, 2010
+--------------------
+Changed logging configs to inline yaml which I find much easier to read and
+work with than the old Windows .ini style configuration.  Also removes the
+need to deal with the "where do I install .ini/.conf files" issue with twistd.
+
+
+
+
+
 November 13, 2010
 --------------------
 Removed "Wing IDE" __main__ function, from loggingserver.py.

@@ -32,11 +32,14 @@ logging.handlers.SocketHandler is the source, this is the sink.
 import logging.config
 from cPickle import loads
 from struct import unpack
+from pprint import pprint
 
 import twisted
 from twisted.internet.protocol import Protocol
 from twisted.application.internet import TCPServer
 from twisted.python import log  # so we can log to Twisted's separate log
+
+import yaml
 
 observer = log.PythonLoggingObserver()
 observer.start()
@@ -47,8 +50,36 @@ from loggingmodel import model
 ##
 # configure the logging system *once*
 ##
-logging.config.fileConfig('loggingserver.conf',
-                          {"processlog" : "process.log"})
+loggerConfig = yaml.load(
+"""
+version: 1
+formatters:
+  general:
+    datefmt: '%Y-%m-%d %H:%M:%S'
+    format: '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+handlers:
+  hlogfile:
+    class: logging.FileHandler
+    level: NOTSET
+    formatter: general
+    filename: 'process.log'
+loggers:
+  logfile:
+    level: NOTSET
+    handlers: [hlogfile]
+    qualname: (logfile)
+    propagate: 0
+    parent: root
+root:
+  level: NOTSET
+  handlers: [hlogfile]
+  qualname: (root)
+  propagate: 1
+"""
+)
+
+# pprint(loggerConfig)
+logging.config.dictConfig(loggerConfig)
 
 # Constant, length of the header length (an old-style 4 byte long integer)
 LONG_INT_LEN = 4
@@ -92,11 +123,10 @@ class LoggingProtocol(Protocol):
         # no longer have a complete record, then exit.  We'll get called again
         # as soon as there's more data available.
         ##
-        done = False
-        while not done:
+        while True:
             ##
             # If we've not yet gotten the record length for the next record,
-            # and we have enough data to get it, do so
+            # and we have enough data to get it, do so.
             ##
             if not self.rec_len and self.buffer_len >= LONG_INT_LEN:
                 self.rec_len = unpack(">L", self.buffer[:LONG_INT_LEN])[0]
@@ -104,7 +134,7 @@ class LoggingProtocol(Protocol):
 
             ##
             # If we've gotten the length, and there's enough data in the buffer
-            # to build our record, do so
+            # to build our record, do so.
             #
             # Otherwise, we're done (for now).
             ##
@@ -137,13 +167,14 @@ class LoggingProtocol(Protocol):
 
                 ##
                 # Unset self.rec_len and self.full_buffer_len since we don't
-                # yet know the length of the next one.
+                # yet know the length of the next one.  When we loop around,
+                # we'll take care of that if we've got enough data to work on.
                 ##
                 self.rec_len = self.full_buffer_len = None
             else:
                 # otherwise, we either don't know the length,
                 # or don't have a complete record, done for now
-                done = True
+                break
 
     def connectionLost(self, reason):
         log.msg("connectionLost called")

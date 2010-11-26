@@ -14,14 +14,16 @@ import loggingprotocol
 import loggingwebservice
 
 def makeService(config):
-    # create an application instance
-    application = service.Application("LoggingServer")
+    # create a MultiService instead of an app
+
+    multi = service.MultiService()
 
     # create the logging service
     loggingService = loggingprotocol.LoggingService()
-    loggingService.setServiceParent(application)
+    multi.addService(loggingService)
 
     # create the logging server web status page server
     loggingServiceWebServer = loggingwebservice.LoggingServerWebService()
-    loggingServiceWebServer.setServiceParent(application)
+    multi.addService(loggingServiceWebServer)
 
+    return multi
