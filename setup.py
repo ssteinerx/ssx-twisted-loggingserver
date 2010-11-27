@@ -7,7 +7,6 @@ setup(name='loggingserver',
       zip_safe=False,
       packages=[
          "loggingserver",
-         "twisted.plugins",
       ],
       package_data = {
          # If any package contains *.txt or *.rst files, include them:
