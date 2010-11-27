@@ -1,0 +1,38 @@
+#!/bin/sh
+# Start/stop the named twistd application
+# Cloned from: https://gist.github.com/373978
+# From a mailing list discussion at:
+#  http://markmail.org/message/du6dtw36hkntz47p#query:twistd%20init.d%20script+page:1+mid:w35d7hzu5mowwbe3+state:results
+#
+
+# APP=/opt/loggingserver/loggingserver.py
+TWISTD=/usr/local/bin/twistd
+PID=/var/run/loggingserver.pid
+LOGFILE=/var/log/loggingserver/loggingserver.log
+DESCRIPTION="Twisted based logging server."
+NAME=loggingserver
+
+test -f $APP || exit 0
+test -f $TWISTD || exit 0
+
+. /lib/lsb/init-functions
+
+case "$1" in
+	start)	log_daemon_msg "Starting $DESCRIPTION" "$NAME"
+		start-stop-daemon --start --quiet --pidfile $PID --name $NAME --startas $TWISTD -- --logfile="$LOGFILE" --pidfile="$PID" -y $APP
+		log_end_msg $?
+		;;
+	stop)	log_daemon_msg "Stopping $DESCRIPTION" "$NAME"
+		start-stop-daemon --stop --quiet --pidfile $PID
+		log_end_msg $?
+		;;
+	restart) log_daemon_msg "Restarting $DESCRIPTION" "$NAME"
+		$0 stop
+		$0 start
+		log_end_msg $?
+		;;
+*)		log_action_msg "Usage: /etc/init.d/$NAME {start|stop|restart}"
+		exit 2
+		;;
+esac
+exit 0
