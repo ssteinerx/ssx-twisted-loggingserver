@@ -20,4 +20,3 @@ executable with:
 
     # chmod +x /etc/init.d/loggingserver
 
-

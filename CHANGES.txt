@@ -9,8 +9,8 @@ November 25, 2010
 --------------------
 
 Changed logging configs to inline yaml which I find much easier to read and
-work with than the old Windows .ini style configuration.  Also removes the
-need to deal with the "where do I install .ini/.conf files" issue with twistd.
+work with than the old Windows .ini style configuration. Also removes the need
+to deal with the "where do I install .ini/.conf files" issue with twistd.
 
 Also pulled CSS inline in loggingwebpage.py for the same reason.
 
@@ -42,9 +42,10 @@ Wing.  Removed.
 
 November 13, 2010
 --------------------
+
 Moved things down into a separate directory, about to create a twisted plugin
 out of this so that it can just be invoked without falderal directly from
-`twistd`.  This will allow me to use it the way I want, under supervisord and
+`twistd`. This will allow me to use it the way I want, under supervisord and
 will allow me to pass in command line parameters as well.
 
 November 13, 2010
