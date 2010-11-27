@@ -6,10 +6,78 @@ status.
 htmlpage = '''
 <html>
   <head>
-    <meta http-equiv="refresh" content="5" />
+    <meta http-equiv="refreshNOT" content="5" />
     <title>Logging Server Status Page</title>
-    <link rel="stylesheet" type="text/css"
-          href="/loggingserver.css" />
+    <style type="text/css">
+        body {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          margin-right: 10px;
+          margin-left: 10px;
+          font-family: verdana, arial, helvetica, sans-serif;
+        }
+
+        h2, h4 {
+          text-align: center;
+          padding-top: 0px;
+          padding-bottom: 0px;
+          margin: 2px;
+        }
+
+        table {
+          margin-left: auto;
+          margin-right: auto;
+          padding: 0;
+          border: 1px solid black;
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+
+        table.logs {
+          table-layout: fixed;
+        }
+
+        tr {
+          font-family: "Lucida Console", monospace;
+          font-size: 10pt;
+        }
+
+        tr.critical {
+          background-color: red;
+          color: yellow;
+          text-decoration: blink;
+        }
+
+        tr.error {
+          background-color: #ff3300;  /* red */
+          color: yellow;
+        }
+
+        tr.warn {
+          background-color: #ffff99; /* yellow */
+          color: black;
+        }
+
+        tr.info {
+          background-color: lightgreen;
+          color: black;
+        }
+
+        tr.debug {
+          background-color: aquamarine;
+          color: black;
+        }
+
+        tr.header {
+          font-family: verdana, arial, helvetica, sans-serif;
+          font-size: 10pt;
+        }
+
+        td.cell {
+          border: 1px solid black;
+          padding: 2px 2px;
+        }
+    </style>
   </head>
   <body>
     <h4>Logging Server Status Page</h4>

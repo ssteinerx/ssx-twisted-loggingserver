@@ -1,29 +1,30 @@
-'''
-Main logging program that implements the socket based logging server.
-'''
-
-##
-# Removed "Wing IDE" __main__ function, didn't work for me anyway.  Making
-# a twistd plugin instead.
-##
 
 import os
 from twisted.application import service
 
-import loggingprotocol
-import loggingwebservice
+from loggingprotocol import LoggingService
+from loggingwebservice import LoggingServerWebService
 
 def makeService(config):
-    # create a MultiService instead of an app
+    """
+    Make a service that can be served as a Twisted plugin's "application"
+    """
 
+    ##
+    # Create a MultiService to hold our services
+    ##
     multi = service.MultiService()
 
+    ##
     # create the logging service
-    loggingService = loggingprotocol.LoggingService()
+    ##
+    loggingService = LoggingService()
     multi.addService(loggingService)
 
-    # create the logging server web status page server
-    loggingServiceWebServer = loggingwebservice.LoggingServerWebService()
+    ##
+    # Create the logging server web status page server
+    ##
+    loggingServiceWebServer = LoggingServerWebService()
     multi.addService(loggingServiceWebServer)
 
     return multi

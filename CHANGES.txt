@@ -1,19 +1,44 @@
+November 27, 2010
+--------------------
+
+Making deployable.
+
+    1> Fabfile
+
 November 25, 2010
 --------------------
+
 Changed logging configs to inline yaml which I find much easier to read and
 work with than the old Windows .ini style configuration.  Also removes the
 need to deal with the "where do I install .ini/.conf files" issue with twistd.
 
+Also pulled CSS inline in loggingwebpage.py for the same reason.
 
+Now that we run as a twistd plugin, I'll probably parameterize the external
+file locations or, more likely, make one .conf file for all that stuff and
+pass *its* location on the command line.
 
+One thing I don't know yet is whether there's built-in support in the Twisted
+t.p.usage.Options for any sort of file based config handling.
 
+November 17, 2010
+--------------------
+
+Working as twistd plugin, added a bunch of command line parameters, none of
+which are hooked up yet.
+
+Try:
+
+    twistd loggingserver --help
+
+to see where I'm headed.
 
 November 13, 2010
 --------------------
 Removed "Wing IDE" __main__ function, from loggingserver.py.
 
-I never saw it actually work, didn't work from command line, don't use Wing,
-removed.
+I never saw it actually work, didn't work from command line, and I don't use
+Wing.  Removed.
 
 November 13, 2010
 --------------------
@@ -21,7 +46,6 @@ Moved things down into a separate directory, about to create a twisted plugin
 out of this so that it can just be invoked without falderal directly from
 `twistd`.  This will allow me to use it the way I want, under supervisord and
 will allow me to pass in command line parameters as well.
-
 
 November 13, 2010
 --------------------
@@ -47,7 +71,8 @@ different interface. I added a parameter to the LoggingServerWebService to
 allow specification of a different interface though I haven't figured out how
 to get twistd to pass a command line parameter in yet...that's funny, seems
 like I was involved in a discussion on the twisted mailing list about this a
-while ago; you can't.  The suggestion was to "write a plug-in."  Wonderful.
+while ago; you can't. The suggestion was to "write a plug-in." Wonderful. A
+week later, I did.
 
 November 7, 2010
 --------------------
@@ -55,8 +80,6 @@ November 7, 2010
 Removed hard-coded limit on number of records kept by LoggingServerModel to be
 configurable on instantiation rather than fixed at 200. Changed default to 30
 to accommodate my needs; 200 just took too long to refresh in the browser.
-Since it's configurable now, the default could be put back to 200 if it
-bothers anyone.
 
 I changed this since I have different destinations for these queues that
 require different amounts of back-storage.

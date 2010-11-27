@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__author__ = 'ssteinerX'
+__author__ = 'ssteinerX@gmail.com'
 
 setup(name='loggingserver',
       version='0.1',
@@ -15,5 +15,5 @@ setup(name='loggingserver',
       },
       author=__author__,
       author_email="ssteinerX@gmail.com",
-      url="http://https://github.com/ssteinerx/python-loggingserver",
+      url="http://https://github.com/ssteinerx/ssx-twisted-loggingserver",
 )

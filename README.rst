@@ -1,10 +1,14 @@
-PythonLoggingServer
-===================
+ssx-twisted-loggingserver
+=========================
 
+Derived from:
+-------------
 A Python Logging Server by Doug Farrell
 Original at: http://code.google.com/p/python-loggingserver/
 
-Modified by Steve Steiner (ssteinerX@gmail.com)
+Now a separate work by:
+-----------------------
+Steve Steiner (ssteinerX@gmail.com)
 ssteinerX github: https://ssteinerx@github.com/ssteinerx/ssx-twisted-loggingserver.git
 
 Introduction
@@ -17,55 +21,46 @@ SocketHandler client.
 Purpose
 -------
 
-My (Doug Farrell) reason for creating this is I like the Python logging
-system, but wasn't crazy about every Python process on every separate server
-having its own log file. Plus, I had to know which log file to look in to find
-a problem that might be occurring.
+Python's logging is wonderful, but when you have multiple servers that you
+need to monitor, having each process logging to its own file, on separate
+servers, things get pretty unmanageable pretty fast. Logging into the servers
+is a chore, finding the log files is a chore, finding the information you need
+is a chore.
 
-I could have all Python processes point to one log file, but there was nothing
-to prevent them from trashing the log file by trying to write at the same
-time.
+This is not efficient; anything with "chore" attached to it needs to be fixed.
 
-In addition, processes on other servers couldn't do this unless they used some
-mounted/shared file system. Plus, tailing a log file, while useful, didn't
-have the immediacy I was looking for.
+This logging server resolves these issues by providing the following:
 
-The logging server resolves these issues by providing the following:
+    * Provides a single central log file for all connected processes
+    * Can sink virtually unlimited external logging servers
 
-* It synchronizes access to the one central log file through the network
-  interface
-* Because it is network based, multiple Python processes can send log messages
-  to it
-* Again, because it is network based, multiple Python processes on multiple
-  servers can send log messages to it
-* It provides a centralized status page that shows
-    1. Some statistics on the logging server itself
-    2. A color coded, chronological listing of the most recent 300 log
-       messages that is updated every 5 seconds.
-    3. A separate user configurable CSS file to control the presentation of
-       the status page
+The web service:
+    * Provides a centralized status page showing:
+        1. Some statistics on the logging server itself
+        2.  A color coded, chronological listing of the most recent log
+            messages, updated in realtime via a websocket
+        3.  A separate user configurable CSS file to control the presentation
+            of the status page
 
 Requirements
 ------------
 
-The logging server requires the Twisted framework be installed on your system
-in order to run. The easiest way to do this is to use easy_install to install
-the Twisted system.
+Requires Twisted and pyyaml.  Should be handled by setup.py, see INSTALL.rst.
 
 Installation
 ------------
 
-The logging server isn't a package that is added to a running application, it
-is a daemon process that runs stand alone. When run it reads its configuration
-file and begins to listen on two network socket ports for messages. On one
-port it is listening for log messages that were transmitted by client
+ssteinerX-twisted-loggingserver isn't a package that is added to a running
+application, it is a twistd daemon plugin that runs stand alone. When run it
+reads its configuration file and begins to listen on two network socket ports
+for messages.
+
+On one port it is listening for log messages that were transmitted by client
 programs.
 
-On the other port it is listening for HTTP requests for the status page. For
-this reason the project code can be anywhere on the system so long as it can
-be run by Twisted. The program will need access to its configuration file.
-For a production installation the code should be located in some central
-script location.
+On the other port it is listening for HTTP requests for the status page.
+
+Starting a twistd daemon with this plugin is covered in the DAEMON.rst file.
 
 Status Page
 -----------

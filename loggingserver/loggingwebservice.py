@@ -47,7 +47,7 @@ class LoggingServerWebService(twisted.application.internet.TCPServer):
         webRoot = twisted.web.resource.Resource()
         webRoot.putChild('', LoggingServerWebResource())
         site = twisted.web.server.Site(webRoot)
-        webRoot.putChild('loggingserver.css', File('loggingserver.css'))
+        # webRoot.putChild('loggingserver.css', File('loggingserver.css'))
         internet.TCPServer.__init__(self,
                 logging.handlers.DEFAULT_TCP_LOGGING_PORT + 1, site, interface=interface)
         self.setName("Logging Server Web Server")
