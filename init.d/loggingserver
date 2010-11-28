@@ -19,11 +19,11 @@ test -f $TWISTD || exit 0
 
 case "$1" in
 	start)	log_daemon_msg "Starting $DESCRIPTION" "$NAME"
-		start-stop-daemon --start --quiet --pidfile $PID --name $NAME --startas $NAME -- --logfile="$LOGFILE" --pidfile="$PID" $NAME
+		$TWISTD --logfile="$LOGFILE" --pidfile="$PID" $NAME
 		log_end_msg $?
 		;;
 	stop)	log_daemon_msg "Stopping $DESCRIPTION" "$NAME"
-		start-stop-daemon --stop --quiet --pidfile $PID
+		kill -9 `cat $PID`
 		log_end_msg $?
 		;;
 	restart) log_daemon_msg "Restarting $DESCRIPTION" "$NAME"
