@@ -10,8 +10,6 @@ setup(name='loggingserver',
          "twisted.plugins",
       ],
       package_data = {
-         # If any package contains *.txt or *.rst files, include them:
-         '': ['*.conf', '*.rst'],
          'twisted' : ['plugins/loggingplugin.py',],
       },
       author=__author__,
