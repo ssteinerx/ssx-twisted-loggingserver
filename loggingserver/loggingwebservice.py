@@ -1,7 +1,6 @@
 import logging.handlers
 
 from twisted.application import internet
-from twisted.web.static import File
 
 import twisted.internet
 
@@ -10,15 +9,15 @@ from loggingwebpage import htmlpage
 
 
 class LoggingServerWebResource(twisted.web.resource.Resource):
-    '''This class defines the entry point for the logging server
+    """This class defines the entry point for the logging server
     status home page. This page provides a view of what's going
     on inside the logging server.
-    '''
+    """
     # November 7, 2010 -- ss -- only initialize once for the class
     formatter = logging.Formatter(
         fmt="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S")
-    html = '''<tr class="%s"><td>%s</td></tr>'''
+    html = """<tr class="%s"><td>%s</td></tr>"""
 
     def render_GET(self, request):
         data = {
@@ -40,9 +39,9 @@ class LoggingServerWebResource(twisted.web.resource.Resource):
 
 
 class LoggingServerWebService(twisted.application.internet.TCPServer):
-    '''This class encapsulates the createion of the TCP service that
+    """This class encapsulates the createion of the TCP service that
     provides the HTTP webserver for the logging servers status page.
-    '''
+    """
     def __init__(self, interface='127.0.0.1'):
         webRoot = twisted.web.resource.Resource()
         webRoot.putChild('', LoggingServerWebResource())

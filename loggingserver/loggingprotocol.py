@@ -1,9 +1,9 @@
-'''
+"""
 This module provides a Twisted Service that handles the output of
 Python's built-in logging.handlers.SocketHandler.
 
 logging.handlers.SocketHandler is the source, this is the sink.
-'''
+"""
 ##
 # November 13, 2010
 #
@@ -32,7 +32,6 @@ logging.handlers.SocketHandler is the source, this is the sink.
 import logging.config
 from cPickle import loads
 from struct import unpack
-from pprint import pprint
 
 import twisted
 from twisted.internet.protocol import Protocol
@@ -84,24 +83,25 @@ logging.config.dictConfig(loggerConfig)
 # Constant, length of the header length (an old-style 4 byte long integer)
 LONG_INT_LEN = 4
 
+
 class LoggingProtocol(Protocol):
-    '''Encapsulates the actual handling of the data received by the
+    """Encapsulates the actual handling of the data received by the
     protocol. It collects all incoming data, building and forwarding complete
     log records as they arrive.
-    '''
+    """
 
     def __init__(self):
-        '''Get a "loggingserver" logger, and set up our buffer and record
+        """Get a "loggingserver" logger, and set up our buffer and record
         instance variables.
-        '''
-        print "Creating new LoggingProtocol object"
+        """
+        log.msg("Creating new LoggingProtocol object")
         self.logger = logging.getLogger("loggingserver")
         self.buffer = ""
         self.buffer_len = self.full_buffer_len = 0
         self.rec_len = None
 
     def dataReceived(self, data):
-        '''Called whenever there's data available in the socket.
+        """Called whenever there's data available in the socket.
 
         Pulls the newly received data from the socket, adds it to what we've
         already got, then checks to see whether we've got enough to start
@@ -109,7 +109,7 @@ class LoggingProtocol(Protocol):
 
         If so, we build as much of the log record as we can and, whenever we
         have a complete one, pass it off to Python's logging system.
-        '''
+        """
 
         ##
         # First, paste the recieved data onto what we have and compute the
@@ -133,8 +133,8 @@ class LoggingProtocol(Protocol):
                 self.full_buffer_len = LONG_INT_LEN + self.rec_len
 
             ##
-            # If we've gotten the length, and there's enough data in the buffer
-            # to build our record, do so.
+            # If we've gotten the length, and there's enough data in the
+            # buffer to build our record, do so.
             #
             # Otherwise, we're done (for now).
             ##
@@ -172,8 +172,10 @@ class LoggingProtocol(Protocol):
                 ##
                 self.rec_len = self.full_buffer_len = None
             else:
+                ##
                 # otherwise, we either don't know the length,
                 # or don't have a complete record, done for now
+                ##
                 break
 
     def connectionLost(self, reason):
@@ -186,15 +188,15 @@ class LoggingProtocol(Protocol):
 
 
 class LoggingFactory(twisted.internet.protocol.Factory):
-    '''Factory that creates the LoggingProtocol object'''
+    """Factory that creates the LoggingProtocol object"""
     protocol = LoggingProtocol
 
 
 class LoggingService(TCPServer):
-    '''Encapsulates our TCP service, tying it to a port number and to the
+    """Encapsulates our TCP service, tying it to a port number and to the
     protocol that will handle the received messages, in this case an instance
     of LoggingProtocol
-    '''
+    """
     def __init__(self):
         twisted.application.internet.TCPServer.__init__(self,
             logging.handlers.DEFAULT_TCP_LOGGING_PORT,

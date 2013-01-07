@@ -1,16 +1,15 @@
-'''
+"""
 This is just a simple test harness for the logging server.
 It randomly generates log messages to send to the server till
 the user hits CTRL-C. It also expects a command line parameter of
 some string, which is the "module" reporting the log message.
-'''
+"""
 
 import logging
 import logging.config
 import sys
 import random
 import time
-
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -22,7 +21,7 @@ if __name__ == "__main__":
         name = sys.argv[1]
 
     logging.config.fileConfig('loggingtest.conf',
-                              {"logging_server" : "localhost"})
+                             {"logging_server" : "localhost"})
     log = logging.getLogger(name)
 
     log_msg_count = 0
@@ -53,4 +52,3 @@ if __name__ == "__main__":
 
     log.warn("%s loggingtest.py log message generator is leaving the party" % name)
     print "%s is done" % name
-

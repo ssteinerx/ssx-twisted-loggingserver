@@ -1,9 +1,9 @@
-'''
+"""
 This module contains the html the logging server uses to display its
 status.
-'''
+"""
 
-htmlpage = '''
+htmlpage = """
 <html>
   <head>
     <meta http-equiv="refreshNOT" content="5" />
@@ -102,4 +102,4 @@ htmlpage = '''
     </table>
   </body>
 </html>
-'''
+"""
