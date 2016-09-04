@@ -2,3 +2,5 @@
 *.pid
 *.log
 .idea
+*.cache
+
